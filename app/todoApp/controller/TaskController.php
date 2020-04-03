@@ -30,7 +30,7 @@ class TaskController extends Controller {
             $this->model->checkPageNumber(); 
             $arr = $this->model->getTasks($dbConnection);
             $tasks = $arr['tasks'];
-            $total = $arr['total'];
+            $pageCount = $arr['pageCount'];
             $page = $arr['page'];
             
         } catch (Exception $e) {
@@ -41,7 +41,7 @@ class TaskController extends Controller {
         
         $this->render('task:showTasks', [
             'tasks' => $tasks, 
-            'total' => $total, 
+            'pageCount' => $pageCount, 
             'page' => $page
         ]);
     }
