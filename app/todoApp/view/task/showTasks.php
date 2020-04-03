@@ -43,24 +43,53 @@
 
 
 <a href="/create-task">Создать задачу</a><br>
+
+
 <div class="btn-group">
   <?php if (isset($page) && $page !== 0): ?>  
+    
     <?php if ($page > 1): ?>
-      <?php $backpage2 = '<a class="btn theme-button rounded" href= /show-tasks?page=1><<Первая страница</a>'; ?>
+        <?php if (isset($_GET['sort']) && !empty($_GET['sort'])): ?>
+            <?php $backpage2 = '<a class="btn theme-button rounded" href= /show-tasks?page=1&sort=' . $_GET['sort'] . '><<Первая страница</a>'; ?>
+        <?php else: ?>
+            <?php $backpage2 = '<a class="btn theme-button rounded" href= /show-tasks?page=1><<Первая страница</a>'; ?>
+        <?php endif; ?>
       <?php echo $backpage2 . " "; ?>
     <?php endif; ?> 
+
+
     <?php  if ($page > 2): ?>
-        <?php $backpage1 = '<a class="btn theme-button rounded" href= /show-tasks?page='. ($page - 1) ."><Предыдущая страница</a>"; ?>
+        <?php if (isset($_GET['sort']) && !empty($_GET['sort'])): ?>
+            <?php $backpage1 = '<a class="btn theme-button rounded" href= /show-tasks?page='. ($page - 1) .'&sort=' . $_GET['sort'] . '><Предыдущая страница</a>'; ?>
+        <?php else: ?>
+            <?php $backpage1 = '<a class="btn theme-button rounded" href= /show-tasks?page='. ($page - 1) .'><Предыдущая страница</a>'; ?>
+        <?php endif; ?>
         <?php echo $backpage1 . " "; ?>
     <?php endif; ?> 
+
+
     <b><a class="btn theme-button" href="#"><?php echo " " . $page. " "; ?></a></b> 
-    <?php if ($page < $total): ?>
-      <?php $nextpage1 = '<a class="btn theme-button rounded" href= /show-tasks?page='. ($page + 1) .'>Следующая страница></a>'; ?>
-      <?php echo $nextpage1 . " "; ?>
+    
+
+    <?php if ($page < $pageCount): ?>
+        <?php if (isset($_GET['sort']) && !empty($_GET['sort'])): ?>
+            <?php $nextpage1 = '<a class="btn theme-button rounded" href= /show-tasks?page='. ($page + 1) .'&sort=' . $_GET['sort'] . '>Следующая страница></a>'; ?>
+        <?php else: ?>
+            <?php $nextpage1 = '<a class="btn theme-button rounded" href= /show-tasks?page='. ($page + 1) .'>Следующая страница></a>'; ?>
+        <?php endif; ?>
+        <?php echo $nextpage1 . " "; ?>
     <?php endif; ?> 
-    <?php if ($page < $total-1): ?>
-      <?php $nextpage2 = '<a class="btn theme-button rounded" href= /show-tasks?page=' .$total. '>Последняя страница>></a>'; ?> 
-      <?php echo $nextpage2; ?>
-    <?php endif; ?> 
+
+
+    <?php if ($page < $pageCount-1): ?>
+        <?php if (isset($_GET['sort']) && !empty($_GET['sort'])): ?>
+            <?php $nextpage2 = '<a class="btn theme-button rounded" href= /show-tasks?page=' .$pageCount. '&sort=' . $_GET['sort'] . '>Последняя страница>></a>'; ?> 
+        <?php else: ?>  
+            <?php $nextpage2 = '<a class="btn theme-button rounded" href= /show-tasks?page=' .$pageCount. '>Последняя страница>></a>'; ?>   
+        <?php endif; ?> 
+        <?php echo $nextpage2; ?>
+    <?php endif; ?>
+
   <?php endif; ?>
 </div> 
+

@@ -7,15 +7,14 @@ class Task {
         $page = intval($this->getPageId());
 
         $postsCount = $this->getCountWithStatusPublished($dbConnection); 
-        $count = $postsCount;
 
-        $total = ceil($postsCount / $countInPage); 
-        if ($_GET['page'] > $total) {
+        $pageCount = ceil($postsCount / $countInPage); 
+        if ($_GET['page'] > $pageCount) {
             $page = 1;
         }            
 
         $start = $page * $countInPage - $countInPage;  
-
+        
         // Выбираем количество задач $countInPage начиная с номера $start 
         if ($_GET['sort'] == 'ByName') {
         	$arrTasks = $this->getTasksByName($dbConnection, $start, $countInPage);
@@ -26,12 +25,11 @@ class Task {
         } else {
         	$arrTasks = $this->showWithLimit($dbConnection, $start, $countInPage);
         }
-        
 
         return [
             'tasks' => $arrTasks,
-            'count' => $count,
-            'total' => $total,
+            'count' => $postsCount,
+            'pageCount' => $pageCount,
             'page' => $page
         ];  
 
@@ -103,7 +101,7 @@ class Task {
 
     public function getList($dbConnection, $countInPage) {
        
-        return ['arrTasks' => $arrTasks, 'total' => $total, 'page' => $page, 'count' => $count];
+        return ['arrTasks' => $arrTasks, 'pageCount' => $pageCount, 'page' => $page, 'count' => $count];
     }
 
     public function getTasksByName($dbConnection, $start, $countInPage)
